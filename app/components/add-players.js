@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const $ = Ember.$;
+
 export default Ember.Component.extend({
   openInput: false,
 
@@ -15,15 +17,23 @@ export default Ember.Component.extend({
     addPlayers() {
       this.set('openInput', false);
 
+      const newPlayers = [];
+
       $('#new-players-table').find('tr')
         .each((i, tr) => {
           const inputs = $(tr).find('input');
-          const data = {
-            name: inputs[0].value,
-            town: inputs[1].value
-          };
-          console.log(data);
+          const name = inputs[0].value;
+          const town = inputs[1].value;
+
+          if (name) {
+            newPlayers.push({
+              name: name,
+              town: town
+            });
+          }
         });
+
+      this.sendAction('savePlayers', newPlayers);
     }
   }
 });
