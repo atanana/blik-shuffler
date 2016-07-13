@@ -1,0 +1,10 @@
+{{#each groups as |group|}}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{#each group.players as |player|}}
+                {{player.name}}
+                <br>
+            {{/each}}
+        </div>
+    </div>
+{{/each}}
