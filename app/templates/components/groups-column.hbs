@@ -1,10 +1,25 @@
-{{#each groups as |group|}}
-    <div class="panel panel-default">
-        <div class="panel-body">
+<div class="group-column">
+    <h1>
+      {{#if isFirst}}
+          Начало
+      {{else}}
+          Тур {{tour}}
+      {{/if}}
+    </h1>
+
+  {{#each groups as |group|}}
+      <div class="panel panel-default">
+          <div class="panel-body">
             {{#each group.players as |player|}}
-                {{player.name}}
+              {{player.name}} ({{player.town}})
                 <br>
             {{/each}}
-        </div>
-    </div>
-{{/each}}
+          </div>
+        {{#unless isFirst}}
+          <div class="panel-footer">
+            {{input value=group.score placeholder="Счёт" class="form-control"}}
+          </div>
+        {{/unless}}
+      </div>
+  {{/each}}
+</div>

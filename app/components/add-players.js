@@ -23,7 +23,9 @@ export default Ember.Component.extend({
         .each((i, tr) => {
           const inputs = $(tr).find('input');
           const name = inputs[0].value;
+          inputs[0].value = '';
           const town = inputs[1].value;
+          inputs[1].value = '';
 
           if (name) {
             newPlayers.push({
