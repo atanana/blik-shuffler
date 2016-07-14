@@ -4,6 +4,7 @@ const $ = Ember.$;
 
 export default Ember.Component.extend({
   openInput: false,
+  classNames: ['inline'],
 
   actions: {
     openInput() {

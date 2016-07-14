@@ -25,9 +25,11 @@ export default Ember.Route.extend({
     },
 
     clearPlayers() {
-      if (confirm('Вы действительно хотите удалить всех игроков?')) {
+      alert('clear players!');
+    },
 
-      }
+    shufflePlayers() {
+      alert('shuffle players!');
     }
   }
 });
