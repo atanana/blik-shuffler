@@ -9,6 +9,16 @@
 
 .group-column {
   width: 400px;
+  display: inline-table;
+  padding: 0 10px;
+
+  h1 {
+    text-align: center;
+  }
+}
+
+.groups-container {
+  white-space: nowrap;
 }
 
 .inline {
