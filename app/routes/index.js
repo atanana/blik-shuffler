@@ -8,9 +8,10 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    savePlayers(players) {
+    savePlayers(players, coach) {
       const group = this.store.createRecord('group', {
-        tour: 0
+        tour: 0,
+        title: coach
       });
 
       players.forEach(player => {
@@ -34,12 +35,14 @@ export default Ember.Route.extend({
         const newGroups = [];
 
         for (let tour = 1; tour <= 6; tour++) {
+          let groupCounter = 1;
           const processPlayer = player => { // jshint ignore:line
             let group = findAppropriateGroup(player, newGroups, tour);
 
             if (!group) {
               group = this.store.createRecord('group', {
-                tour: tour
+                tour: tour,
+                title: `Команда ${tour}-${groupCounter++}`
               });
               newGroups.push(group);
             }

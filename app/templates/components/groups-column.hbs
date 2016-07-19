@@ -9,6 +9,11 @@
 
   {{#each groups as |group|}}
       <div class="panel panel-default">
+          {{#if group.title}}
+              <div class="panel-heading">
+                  <b>{{group.title}}</b>
+              </div>
+          {{/if}}
           <div class="panel-body">
             {{#each group.players as |player|}}
               {{player.name}} ({{player.town}})

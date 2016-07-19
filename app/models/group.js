@@ -3,6 +3,7 @@ import attr from 'ember-data/attr';
 import {hasMany} from 'ember-data/relationships';
 
 export default Model.extend({
+  title: attr('string', {defaultValue: ''}),
   tour: attr('number'),
   score: attr('number', {defaultValue: 0}),
   players: hasMany('player', {

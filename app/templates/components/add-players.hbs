@@ -5,6 +5,8 @@
 {{#bs-modal body=false footer=false open=openInput closedAction="onCloseInput"
     title="Добавить игроков" submitAction=(action "addPlayers")}}
     {{#bs-modal-body class="add-players-modal"}}
+        {{input value=coach placeholder="Тренер" class="form-control"}}
+
         <table id="new-players-table" class="table">
             <tr>
                 <td>

@@ -5,6 +5,7 @@ const $ = Ember.$;
 export default Ember.Component.extend({
   openInput: false,
   classNames: ['inline'],
+  coach: '',
 
   actions: {
     openInput() {
@@ -36,7 +37,8 @@ export default Ember.Component.extend({
           }
         });
 
-      this.sendAction('savePlayers', newPlayers);
+      this.sendAction('savePlayers', newPlayers, this.get('coach'));
+      this.set('coach', '');
     }
   }
 });
