@@ -56,6 +56,11 @@ export default Ember.Route.extend({
 
         this.controller.set('model', this.model());
       });
+    },
+
+    updateGroup(group) {
+      console.log('update');
+      group.save();
     }
   }
 });

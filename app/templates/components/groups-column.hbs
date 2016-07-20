@@ -22,7 +22,7 @@
           </div>
         {{#unless isFirst}}
             <div class="panel-footer">
-              {{input value=group.score placeholder="Счёт" class="form-control"}}
+              {{input value=group.score placeholder="Счёт" class="form-control" type="number" min=0 change=(action "updateGroupScore" group)}}
             </div>
         {{/unless}}
       </div>
