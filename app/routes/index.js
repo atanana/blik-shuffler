@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  currentTour: 0,
-
   model() {
     return this.store.findAll('group');
   },
