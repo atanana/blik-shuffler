@@ -1,14 +1,10 @@
 {{add-players savePlayers="savePlayers" gameStarted=gameStarted}}
-{{clear-players clearPlayers="clearPlayers"}}
 {{options-panel model=model.options gameStarted=gameStarted}}
 {{shuffle-button shufflePlayers="shufflePlayers"}}
+{{clear-players clearPlayers="clearPlayers"}}
 
 <div class="groups-container">
-    {{groups-column rawGroups=model.groups tour=0}}
-    {{groups-column rawGroups=model.groups tour=1}}
-    {{groups-column rawGroups=model.groups tour=2}}
-    {{groups-column rawGroups=model.groups tour=3}}
-    {{groups-column rawGroups=model.groups tour=4}}
-    {{groups-column rawGroups=model.groups tour=5}}
-    {{groups-column rawGroups=model.groups tour=6}}
+    {{#each tours as |tour|}}
+        {{groups-column rawGroups=model.groups tour=tour}}
+    {{/each}}
 </div>
