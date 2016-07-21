@@ -1,5 +1,12 @@
 <div class="nav navbar navbar-default">
     <div class="container-fluid">
-
+        <ul class="nav navbar-nav">
+            {{#active-link}}
+                {{link-to "Команды" "index"}}
+            {{/active-link}}
+            {{#active-link}}
+                {{link-to "Результаты" "scores"}}
+            {{/active-link}}
+        </ul>
     </div>
 </div>
