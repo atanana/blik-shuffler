@@ -6,11 +6,6 @@ export default Ember.Component.extend({
   openInput: false,
   classNames: ['inline'],
   coach: '',
-  gameStarted: Ember.computed('groups.@each.tour', function () {
-    return !!this.get('groups')
-      .map(group => group.get('tour'))
-      .find(tour => tour > 0);
-  }),
 
   actions: {
     openInput() {

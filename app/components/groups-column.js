@@ -14,7 +14,7 @@ export default Ember.Component.extend({
 
   actions: {
     updateGroupScore(group) {
-      this.sendAction('updateGroup', group);
+      group.save();
     }
   }
 });

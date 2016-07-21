@@ -2,7 +2,26 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
-    return this.store.findAll('group');
+    return Ember.RSVP.hash({
+      groups: this.store.findAll('group'),
+      options: this.store.findAll('options')
+        .then(optionsEntities => {
+          let options = optionsEntities.get('firstObject');
+
+          if (!options) {
+            options = this.store.createRecord('options', {
+              toursCount: 6
+            });
+            options.save();
+          }
+
+          return options;
+        })
+    });
+  },
+
+  updateGroups: function () {
+    this.controller.set('model.groups', this.store.findAll('group'));
   },
 
   actions: {
@@ -20,7 +39,7 @@ export default Ember.Route.extend({
 
       group.save();
 
-      this.controller.set('model', this.model());
+      this.updateGroups();
     },
 
     clearPlayers() {
@@ -54,14 +73,9 @@ export default Ember.Route.extend({
 
         newGroups.forEach(group => group.save());
 
-        this.controller.set('model', this.model());
+        this.updateGroups();
       });
     },
-
-    updateGroup(group) {
-      console.log('update');
-      group.save();
-    }
   }
 });
 
