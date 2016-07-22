@@ -1,1 +1,22 @@
-{{outlet}}
+<table class="table table-striped">
+    <thead><tr>
+        <th>#</th>
+        <th>Игрок</th>
+        <th>Σ</th>
+        {{#each tours as |tour|}}
+            <th>{{tour}}</th>
+        {{/each}}
+    </tr></thead>
+    <tbody>
+    {{#each model.players as |player|}}
+        <tr>
+            <td>1</td>
+            <td>{{player.name}}</td>
+            <td>{{player.totalScore}}</td>
+            {{#each player.scores as |score|}}
+                <td>{{score}}</td>
+            {{/each}}
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
