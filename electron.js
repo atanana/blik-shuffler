@@ -30,6 +30,7 @@ app.on('ready', function onReady() {
         width: 800,
         height: 600
     });
+    mainWindow.maximize();
 
     delete mainWindow.module;
 
