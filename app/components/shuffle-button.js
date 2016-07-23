@@ -5,7 +5,7 @@ export default Ember.Component.extend({
 
   actions: {
     shufflePlayers() {
-      if (confirm('Вы действительно перемешать игроков?')) {
+      if (confirm('Вы действительно хотите перемешать игроков?')) {
         this.sendAction('shufflePlayers');
       }
     }
