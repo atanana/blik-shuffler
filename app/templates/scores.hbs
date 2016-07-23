@@ -1,16 +1,16 @@
 <table class="table table-striped">
     <thead><tr>
-        <th>#</th>
+        <th width="50">#</th>
         <th>Игрок</th>
-        <th>Σ</th>
+        <th width="50">Σ</th>
         {{#each tours as |tour|}}
-            <th>{{tour}}</th>
+            <th width="50">{{tour}}</th>
         {{/each}}
     </tr></thead>
     <tbody>
     {{#each model.players as |player|}}
         <tr>
-            <td>1</td>
+            <td>{{player.place}}</td>
             <td>{{player.name}}</td>
             <td>{{player.totalScore}}</td>
             {{#each player.scores as |score|}}
