@@ -16,7 +16,7 @@
           {{/if}}
           <div class="panel-body">
             {{#each group.sortedPlayers as |player|}}
-              {{player.name}} ({{player.town}})
+              {{player.name}} {{#if player.town}}({{player.town}}){{/if}}
                 <br>
             {{/each}}
           </div>

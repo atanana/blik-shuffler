@@ -1,11 +1,11 @@
-{{#bs-button type="primary" icon="glyphicon glyphicon-plus" action="openInput" disabled=gameStarted}}
+{{#bs-button type="primary" icon="glyphicon glyphicon-plus" action="openInput"}}
     Добавить игроков
 {{/bs-button}}
 
 {{#bs-modal body=false footer=false open=openInput closedAction="onCloseInput"
     title="Добавить игроков" submitAction=(action "addPlayers")}}
     {{#bs-modal-body class="add-players-modal"}}
-        {{input value=coach placeholder="Тренер" class="form-control"}}
+        {{input value=coach placeholder="Тренер" class="form-control" autofocus=true}}
 
         <table id="new-players-table" class="table">
             <tr>

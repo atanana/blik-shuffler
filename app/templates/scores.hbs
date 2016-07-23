@@ -11,7 +11,7 @@
     {{#each model.players as |player|}}
         <tr>
             <td>{{player.place}}</td>
-            <td>{{player.name}}</td>
+            <td>{{player.name}}  {{#if player.town}}({{player.town}}){{/if}}</td>
             <td>{{player.totalScore}}</td>
             {{#each player.scores as |score|}}
                 <td>{{score}}</td>

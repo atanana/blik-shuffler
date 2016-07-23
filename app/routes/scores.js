@@ -51,10 +51,20 @@ function getPlayersData(players, options) {
           return prev + parseInt(current.get('score'));
         }, 0);
 
+        const toursCount = options.get('toursCount');
+        let scores = groups.sortBy('tour')
+          .map(group => group.get('score'))
+          .splice(1, groups.length - toursCount - 1);
+
+        while (scores.length < toursCount) {
+          scores.push(0);
+        }
+
         return {
           name: player.get('name'),
+          town: player.get('town'),
           totalScore: totalScore,
-          scores: groups.sortBy('tour').map(group => group.get('score')).splice(1, groups.length - options.get('toursCount') - 1)
+          scores: scores
         };
       }))
   );

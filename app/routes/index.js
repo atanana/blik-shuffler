@@ -43,37 +43,46 @@ export default Ember.Route.extend({
     },
 
     clearPlayers() {
-      alert('clear players!');
+      this.store.findAll('group').then(groups => {
+        groups.forEach(group => group.destroyRecord());
+        this.store.findAll('player').then(players => players.forEach(player => player.destroyRecord()));
+        this.updateGroups();
+      });
     },
 
     shufflePlayers() {
-      this.store.findAll('player').then(data => {
-        const players = data.toArray();
-        const newGroups = [];
+      this.store.findAll('group').then(groups => {
+        groups.filter(group => group.get('tour') !== 0)
+          .forEach(group => group.destroyRecord());
 
-        for (let tour = 1; tour <= 6; tour++) {
-          let groupCounter = 1;
-          const processPlayer = player => { // jshint ignore:line
-            let group = findAppropriateGroup(player, newGroups, tour);
+        this.store.findAll('player').then(data => {
+          const players = data.toArray();
+          const newGroups = [];
 
-            if (!group) {
-              group = this.store.createRecord('group', {
-                tour: tour,
-                title: `Команда ${tour}-${groupCounter++}`
-              });
-              newGroups.push(group);
-            }
+          for (let tour = 1; tour <= 6; tour++) {
+            let groupCounter = 1;
+            const processPlayer = player => { // jshint ignore:line
+              let group = findAppropriateGroup(player, newGroups, tour);
 
-            group.get('players').pushObject(player);
-            player.save();
-          };
+              if (!group) {
+                group = this.store.createRecord('group', {
+                  tour: tour,
+                  title: `Команда ${tour}-${groupCounter++}`
+                });
+                newGroups.push(group);
+              }
 
-          shuffle(players).forEach(processPlayer);
-        }
+              group.get('players').pushObject(player);
+              player.save();
+            };
 
-        newGroups.forEach(group => group.save());
+            shuffle(players).forEach(processPlayer);
+          }
 
-        this.updateGroups();
+          newGroups.forEach(group => group.save());
+
+          this.updateGroups();
+        });
       });
     },
   }
