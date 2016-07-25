@@ -9,7 +9,6 @@
 
 .group-column {
   width: 400px;
-  display: inline-table;
   padding: 0 10px;
 
   h1 {
@@ -18,10 +17,22 @@
 }
 
 .groups-container {
-  white-space: nowrap;
-  overflow-x: scroll;
+  display: flex;
 }
 
 .inline {
   display: inline-block;
+}
+
+.controls-container {
+  padding: 0 10px;
+}
+
+.content-container {
+  padding-top: 60px;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
 }

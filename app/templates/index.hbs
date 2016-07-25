@@ -1,7 +1,9 @@
-{{add-players savePlayers="savePlayers"}}
-{{options-panel model=model.options gameStarted=gameStarted}}
-{{shuffle-button shufflePlayers="shufflePlayers"}}
-{{clear-players clearPlayers="clearPlayers"}}
+<div class="controls-container">
+  {{add-players savePlayers="savePlayers"}}
+  {{options-panel model=model.options gameStarted=gameStarted}}
+  {{shuffle-button shufflePlayers="shufflePlayers"}}
+  {{clear-players clearPlayers="clearPlayers"}}
+</div>
 
 <div class="groups-container">
     {{#each tours as |tour|}}
