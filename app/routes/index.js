@@ -59,7 +59,7 @@ export default Ember.Route.extend({
           const players = data.toArray();
           const newGroups = [];
 
-          for (let tour = 1; tour <= 6; tour++) {
+          for (let tour = 1; tour <= this.controller.get('model.options.toursCount'); tour++) {
             let groupCounter = 1;
             const processPlayer = player => { // jshint ignore:line
               let group = findAppropriateGroup(player, newGroups, tour);
@@ -84,7 +84,7 @@ export default Ember.Route.extend({
           this.updateGroups();
         });
       });
-    },
+    }
   }
 });
 
