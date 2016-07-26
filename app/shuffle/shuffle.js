@@ -1,34 +1,54 @@
-export function shufflePlayers(store, toursCount) {
+export function shufflePlayers(store, options) {
   return store.findAll('group').then(groups => {
-    store.findAll('player').then(players => {
-      groups.filter(group => group.get('tour') !== 0)
-        .forEach(group => group.destroyRecord());
+    groups.filter(group => group.get('tour') !== 0)
+      .forEach(group => group.destroyRecord());
+    const initialGroups = groups.filter(group => group.get('tour') === 0).toArray();
 
-      const newGroups = [];
+    const newGroups = [];
 
-      for (let tour = 1; tour <= toursCount; tour++) {
-        let groupCounter = 1;
-        const processPlayer = player => { // jshint ignore:line
-          let group = findAppropriateGroup(player, newGroups, tour);
+    for (let tour = 1; tour <= options.get('toursCount'); tour++) {
+      let groupCounter = 1;
+      const processPlayer = player => { // jshint ignore:line
+        let group = findAppropriateGroup(player, newGroups, tour);
 
-          if (!group) {
-            group = store.createRecord('group', {
-              tour: tour,
-              title: `Команда ${tour}-${groupCounter++}`
-            });
-            newGroups.push(group);
-          }
+        if (!group) {
+          group = store.createRecord('group', {
+            tour: tour,
+            title: `Команда ${tour}-${groupCounter++}`
+          });
+          newGroups.push(group);
+        }
 
-          group.get('players').pushObject(player);
-          player.save();
-        };
+        group.get('players').pushObject(player);
+        player.save();
+      };
 
-        shuffle(players).forEach(processPlayer);
-      }
+      preparePlayers(initialGroups).forEach(processPlayer);
+    }
 
-      newGroups.forEach(group => group.save());
-    });
+    newGroups.forEach(group => group.save());
   });
+}
+
+function preparePlayers(initialGroups) {
+  const groups = shuffle(initialGroups).map(group => shuffle(group.get('players').toArray()));
+  const players = [];
+  let hasPlayers = true;
+  const getPlayer = function (group) {
+    const player = group.pop();
+
+    if (player) {
+      players.push(player);
+      hasPlayers = true;
+    }
+  };
+
+  while (hasPlayers) {
+    hasPlayers = false;
+    groups.forEach(getPlayer);
+  }
+
+  return players;
 }
 
 function findAppropriateGroup(player, groups, tour) {
@@ -49,7 +69,9 @@ function findAppropriateGroup(player, groups, tour) {
 }
 
 function extractPlayerGroups(player) {
-  return player.get('groups').map(group => group.id);
+  return player.get('groups')
+    .filter(group => !group.get('isDeleted'))
+    .map(group => group.id);
 }
 
 function intersects(array1, array2) {

@@ -52,7 +52,7 @@ export default Ember.Route.extend({
     },
 
     shufflePlayers() {
-      shufflePlayers(this.store, this.controller.get('model.options.toursCount'))
+      shufflePlayers(this.store, this.controller.get('model.options'))
         .then(() => this.updateGroups());
     }
   }
