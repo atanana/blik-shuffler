@@ -1,4 +1,25 @@
-<label>
-    Количество туров:
-    {{input value=model.toursCount class="form-control" type="number" min=0 change=(action "update") disabled=gameStarted}}
-</label>
+{{#bs-button type="info" icon="glyphicon glyphicon-cog" action="openSettings"}}
+    Настройки
+{{/bs-button}}
+
+{{#bs-modal body=false footer=false open=openSettings closedAction="onCloseInput"
+title="Настройки" submitAction=(action "saveOptions")}}
+    {{#bs-modal-body class="add-players-modal"}}
+        <div class="form-group">
+            <label>
+                Количество туров:
+                {{input value=model.toursCount class="form-control" type="number" min=0 disabled=gameStarted}}
+            </label>
+        </div>
+        <div class="form-group">
+            {{input type="radio" name="shuffle_type" value="one_team" id="game-type-one-team" checked=test}}
+            <label for="game-type-one-team">Не играть с сокомандниками</label>
+            <br>
+            {{input type="radio" name="shuffle_type" value="all_players" id="game-type-all-players" checked=model.allGroups}}
+            <label for="game-type-all-players">Не играть дважды с одним и тем же игроком</label>
+        </div>
+    {{/bs-modal-body}}
+    {{#bs-modal-footer}}
+        {{#bs-button buttonType="submit" type="success"}}Сохранить{{/bs-button}}
+    {{/bs-modal-footer}}
+{{/bs-modal}}
