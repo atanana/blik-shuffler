@@ -4,7 +4,7 @@
 
 {{#bs-modal body=false footer=false open=openSettings closedAction="onCloseInput"
 title="Настройки" submitAction=(action "saveOptions")}}
-    {{#bs-modal-body class="add-players-modal"}}
+    {{#bs-modal-body}}
         <div class="form-group">
             <label>
                 Количество туров:
@@ -12,10 +12,10 @@ title="Настройки" submitAction=(action "saveOptions")}}
             </label>
         </div>
         <div class="form-group">
-            {{input type="radio" name="shuffle_type" value="one_team" id="game-type-one-team" checked=test}}
+            {{input type="checkbox" id="game-type-one-team" checked=model.notPlayTeammates disabled=model.notPlayDouble}}
             <label for="game-type-one-team">Не играть с сокомандниками</label>
             <br>
-            {{input type="radio" name="shuffle_type" value="all_players" id="game-type-all-players" checked=model.allGroups}}
+            {{input type="checkbox" id="game-type-all-players" checked=model.notPlayDouble change=(action "updatePlayDouble")}}
             <label for="game-type-all-players">Не играть дважды с одним и тем же игроком</label>
         </div>
     {{/bs-modal-body}}
