@@ -1,22 +1,24 @@
 export function shufflePlayers(store, options) {
   return store.findAll('group').then(groups => {
+    const notPlayDouble = options.get('notPlayDouble');
+    const notPlayTeammates = options.get('notPlayTeammates');
+
     groups.filter(group => group.get('tour') !== 0)
       .forEach(group => group.destroyRecord());
     const initialGroups = groups.filter(group => group.get('tour') === 0).toArray();
 
-    const newGroups = [];
-
     for (let tour = 1; tour <= options.get('toursCount'); tour++) {
+      const tourGroups = [];
       let groupCounter = 1;
       const processPlayer = player => { // jshint ignore:line
-        let group = findAppropriateGroup(player, newGroups, tour);
+        let group = findAppropriateGroup(player, tourGroups, notPlayDouble, notPlayTeammates);
 
         if (!group) {
           group = store.createRecord('group', {
             tour: tour,
             title: `Команда ${tour}-${groupCounter++}`
           });
-          newGroups.push(group);
+          tourGroups.push(group);
         }
 
         group.get('players').pushObject(player);
@@ -24,9 +26,8 @@ export function shufflePlayers(store, options) {
       };
 
       preparePlayers(initialGroups).forEach(processPlayer);
+      tourGroups.forEach(group => group.save());
     }
-
-    newGroups.forEach(group => group.save());
   });
 }
 
@@ -51,16 +52,18 @@ function preparePlayers(initialGroups) {
   return players;
 }
 
-function findAppropriateGroup(player, groups, tour) {
-  const playerGroups = extractPlayerGroups(player);
+function findAppropriateGroup(player, groups, notPlayDouble, notPlayTeammates) {
+  const playerGroups = extractPlayerGroups(player, notPlayDouble, notPlayTeammates);
   return groups.find(group => {
     let appropriate = false;
 
-    if (group.get('tour') === tour) {
-      const players = group.get('players').toArray();
+    const players = group.get('players').toArray();
 
-      if (players.length < 6) {
-        appropriate = !players.find(anotherPlayer => intersects(playerGroups, extractPlayerGroups(anotherPlayer)));
+    if (players.length < 6) {
+      if (notPlayDouble || notPlayTeammates) {
+        appropriate = !players.find(anotherPlayer => intersects(playerGroups, extractPlayerGroups(anotherPlayer, notPlayDouble, notPlayTeammates)));
+      } else {
+        appropriate = true;
       }
     }
 
@@ -68,10 +71,19 @@ function findAppropriateGroup(player, groups, tour) {
   });
 }
 
-function extractPlayerGroups(player) {
-  return player.get('groups')
-    .filter(group => !group.get('isDeleted'))
-    .map(group => group.id);
+function extractPlayerGroups(player, notPlayDouble, notPlayTeammates) {
+  if (notPlayDouble || notPlayTeammates) {
+    let tourFilter = group => true; // jshint ignore:line
+    if (notPlayTeammates && !notPlayDouble) {
+      tourFilter = group => group.get('tour') === 0;
+    }
+
+    return player.get('groups')
+      .filter(group => !group.get('isDeleted') && tourFilter(group))
+      .map(group => group.id);
+  } else {
+    return [];
+  }
 }
 
 function intersects(array1, array2) {
