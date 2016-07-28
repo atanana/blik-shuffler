@@ -1,9 +1,9 @@
 import Ember from 'ember';
+import {getOptions} from '../data/entities_helper';
 
 export default Ember.Route.extend({
   model() {
-    return this.store.findAll('options')
-      .then(optionsEntities => optionsEntities.get('firstObject'))
+    return getOptions(this.store)
       .then(options => this.store.findAll('player')
         .then(players => getPlayersData(players, options)
           .then(players => {

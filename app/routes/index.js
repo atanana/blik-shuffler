@@ -1,23 +1,12 @@
 import Ember from 'ember';
 import {shufflePlayers} from '../shuffle/shuffle';
+import {getOptions} from '../data/entities_helper';
 
 export default Ember.Route.extend({
   model() {
     return Ember.RSVP.hash({
       groups: this.store.findAll('group'),
-      options: this.store.findAll('options')
-        .then(optionsEntities => {
-          let options = optionsEntities.get('firstObject');
-
-          if (!options) {
-            options = this.store.createRecord('options', {
-              toursCount: 6
-            });
-            options.save();
-          }
-
-          return options;
-        })
+      options: getOptions(this.store)
     });
   },
 
@@ -57,8 +46,7 @@ export default Ember.Route.extend({
     },
 
     updateModel() {
-      this.store.findAll('options')
-        .then(optionsEntities => optionsEntities.get('firstObject'))
+      getOptions(this.store)
         .then(options => {
           this.controller.set('model.options', options);
           this.updateGroups();

@@ -21,6 +21,7 @@ module.exports = function(defaults) {
   // along with the exports of each module as its value.
 
   app.import('bower_components/file-saver/FileSaver.js');
+  app.import('bower_components/js-xlsx/dist/xlsx.core.min.js');
 
   return app.toTree();
 };
