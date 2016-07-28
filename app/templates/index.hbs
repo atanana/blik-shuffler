@@ -1,9 +1,12 @@
 <div class="controls-container">
-  {{add-players savePlayers="savePlayers"}}
-  {{options-panel model=model.options gameStarted=gameStarted}}
-  {{shuffle-button shufflePlayers="shufflePlayers"}}
-  {{clear-players clearPlayers="clearPlayers"}}
-  {{save-data}}
+    {{add-players savePlayers="savePlayers"}}
+    {{shuffle-button shufflePlayers="shufflePlayers"}}
+    <div class="button-spacer"></div>
+    {{options-panel model=model.options gameStarted=gameStarted}}
+    {{clear-players clearPlayers="clearPlayers"}}
+    <div class="button-spacer"></div>
+    {{load-data updateModel="updateModel"}}
+    {{save-data}}
 </div>
 
 <div class="groups-container">

@@ -47,13 +47,22 @@ export default Ember.Route.extend({
       this.store.findAll('group').then(groups => {
         groups.forEach(group => group.destroyRecord());
         this.store.findAll('player').then(players => players.forEach(player => player.destroyRecord()));
-        this.updateGroups();
+        this.controller.set('model.groups', []);
       });
     },
 
     shufflePlayers() {
       shufflePlayers(this.store, this.controller.get('model.options'))
         .then(() => this.updateGroups());
+    },
+
+    updateModel() {
+      this.store.findAll('options')
+        .then(optionsEntities => optionsEntities.get('firstObject'))
+        .then(options => {
+          this.controller.set('model.options', options);
+          this.updateGroups();
+        });
     }
   }
 });

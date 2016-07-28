@@ -21,7 +21,7 @@
 }
 
 .inline {
-  display: inline-block;
+  display: inline-block !important;
 }
 
 .controls-container {
@@ -35,4 +35,9 @@
 .navbar {
   position: fixed;
   width: 100%;
+}
+
+.button-spacer {
+  width: 30px;
+  display: inline-block;
 }
