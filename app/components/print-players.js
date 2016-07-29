@@ -20,7 +20,10 @@ export default Ember.Component.extend({
             .map(player => {
               const result = player.get('groups')
                 .sortBy('tour')
-                .map(group => group.get('title'))
+                .map(group => {
+                  const title = group.get('title');
+                  return title.substr(title.lastIndexOf(' ') + 1);
+                })
                 .toArray();
               result[0] = player.get('name');
               return result;
